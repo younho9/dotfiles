@@ -1,0 +1,63 @@
+##########################################################################################################################
+# Structure                                                                                                              #
+##########################################################################################################################
+# <type>(<scope>): <description>                                                                                         #
+#                                                                                                                        #
+# <body>                                                                                                                 #
+#                                                                                                                        #
+# <footer>                                                                                                               #
+##########################################################################################################################
+# <types>                                                                                                                #
+##########################################################################################################################
+# Must be one of the following:                                                                                          #
+# - build: Changes that affect the build system or external dependencies (example scopes: gulp, broccoli, npm)           #
+# - ci: Changes to our CI configuration files and scripts (example scopes: Travis, Circle, BrowserStack, SauceLabs)      #
+# - docs: Documentation only changes                                                                                     #
+# - feat: A new feature (this correlates with MINOR in Semantic Versioning).                                             #
+# - fix: A bug fix (this correlates with PATCH in Semantic Versioning).                                                  #
+# - perf: A code change that improves performance                                                                        #
+# - refactor: A code change that neither fixes a bug nor adds a feature                                                  #
+# - style: Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc)        #
+# - test: Adding missing tests or correcting existing tests                                                              #
+##########################################################################################################################
+# <scope>                                                                                                                #
+##########################################################################################################################
+# The scope should be the name of the npm package affected.                                                              #
+# (as perceived by the person reading the changelog generated from commit messages).                                     #
+##########################################################################################################################
+# <description>                                                                                                          #
+##########################################################################################################################
+# Use the description field to provide a description of the change:                                                      #
+# - use the imperative, present tense: "change" not "changed" nor "changes"                                              #
+# - don't capitalize the first letter                                                                                    #
+# - no dot (.) at the end                                                                                                #
+##########################################################################################################################
+# <body>                                                                                                                 #
+##########################################################################################################################
+# Just as in the summary, use the imperative, present tense: "fix" not "fixed" nor "fixes".                              #
+# Explain the motivation for the change in the commit message body.                                                      #
+# This commit message should explain why you are making the change.                                                      #
+##########################################################################################################################
+# <footer>                                                                                                               #
+##########################################################################################################################
+# The footer can contain information about breaking changes.                                                             #
+# It is also the place to reference GitHub issues, Jira tickets, and other PRs that this commit closes or is related to. #
+#                                                                                                                        #
+# See <url>                                                                                                              #
+# BREAKING CHANGE:                                                                                                       #
+# Reviewed-by:                                                                                                           #
+# Refs: #133                                                                                                             #
+# fixes #133                                                                                                             #
+##########################################################################################################################
+# BREAKING CHANGE                                                                                                        #
+##########################################################################################################################
+# A commit that has a footer BREAKING CHANGE:, or appends a ! after the type/scope, introduces a breaking API change.    #
+# It is correlating with MAJOR in Semantic Versioning.                                                                   #
+# A BREAKING CHANGE can be part of commits of any type.                                                                  #
+##########################################################################################################################
+# Refs:                                                                                                                  #
+# - semver: [MAJOR].[MINOR].[PATCH]                                                                                      #
+# See:                                                                                                                   #
+# - https://www.conventionalcommits.org/en/v1.0.0/                                                                       #
+# - https://github.com/angular/angular/blob/master/CONTRIBUTING.md#-commit-message-format                                #
+##########################################################################################################################
