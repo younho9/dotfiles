@@ -1,1 +1,10 @@
 #!/usr/bin/env bash
+
+# Path to your oh-my-zsh installation.
+export ZSH="/Users/younho9/.oh-my-zsh"
+
+# This loads nvm & bash_completion
+# See https://github.com/nvm-sh/nvm#git-install
+export NVM_DIR="$HOME/.nvm"
+  [ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"
+  [ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && . "/usr/local/opt/nvm/etc/bash_completion.d/nvm"
