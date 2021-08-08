@@ -1,0 +1,30 @@
+[init]
+	defaultBranch = main
+
+[user]
+	name = Younho Choo
+	email = younho9.choo@gmail.com
+
+[alias]
+	graph = log --branches --graph --oneline
+	new = checkout -b
+
+[core]
+	excludesfile = /Users/younho9/.gitignore_global
+	editor = code --wait
+	ignorecase = false
+
+[pull]
+	rebase = true
+
+[commit]
+	template = /Users/younho9/.gitmessage.txt
+
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+
+[includeIf "gitdir:~/repositories/company/"]
+	path = ~/repositories/company/.company.inc
