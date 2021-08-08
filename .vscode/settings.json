@@ -1,0 +1,96 @@
+{
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.python"
+  },
+  "atlascode.bitbucket.enabled": false,
+  "atlascode.jira.enabled": true,
+  "atlascode.jira.startWorkBranchTemplate.customPrefixes": [
+    "feature",
+    "bugfix",
+    "release"
+  ],
+  "atlascode.jira.startWorkBranchTemplate.customTemplate": "{{{prefix}}}/{{{summary}}}/{{{issueKey}}}",
+  "atlascode.jira.statusbar.enabled": true,
+  "atlascode.jira.statusbar.showLogin": true,
+  "atlascode.jira.statusbar.showProduct": true,
+  "atlascode.jira.statusbar.showUser": true,
+  "breadcrumbs.enabled": true,
+  "css.validate": false,
+  "diffEditor.ignoreTrimWhitespace": false,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.detectIndentation": false,
+  "editor.fontFamily": "Fira Code, D2Coding",
+  "editor.fontLigatures": true,
+  "editor.fontSize": 15,
+  "editor.formatOnSave": true,
+  "editor.inlineSuggest.enabled": true,
+  "editor.minimap.enabled": false,
+  "editor.multiCursorModifier": "ctrlCmd",
+  "editor.renderWhitespace": "none",
+  "editor.tabSize": 2,
+  "files.insertFinalNewline": true,
+  "git.autofetch": true,
+  "github.copilot.enable": {
+    "*": true,
+    "markdown": true,
+    "plaintext": true,
+    "yaml": false
+  },
+  "githubIssues.issueCompletionFormatScm": "${issueNumberLabel}",
+  "javascript.format.enable": false,
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "javascript.validate.enable": false,
+  "less.validate": false,
+  "markdown.extension.toc.updateOnSave": false,
+  "python.defaultInterpreterPath": ".venv/bin/python",
+  "python.formatting.provider": "black",
+  "python.pythonPath": ".venv/bin/python",
+  "python.venvPath": "./venv",
+  "redhat.telemetry.enabled": true,
+  "scss.validate": false,
+  "security.workspace.trust.untrustedFiles": "open",
+  "terminal.external.osxExec": "iTerm2.app",
+  "terminal.integrated.fontFamily": "MesloLGS NF",
+  "terminal.integrated.fontSize": 14,
+  "terminal.integrated.scrollback": 5000,
+  "todohighlight.isEnable": true,
+  "todohighlight.keywords": [
+    {
+      "backgroundColor": "#ba64c7",
+      "color": "#ffffff",
+      "overviewRulerColor": "grey",
+      "text": "NOTE:"
+    }
+  ],
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "vetur.experimental.templateInterpolationService": true,
+  "vetur.validation.templateProps": true,
+  "workbench.colorCustomizations": {
+    "[Night Owl (No Italics)]": {
+      "activityBar.background": "#000C1D",
+      "activityBar.border": "#102a44",
+      "editorGroup.border": "#102a44",
+      "sideBar.background": "#001122",
+      "sideBar.border": "#102a44",
+      "sideBar.foreground": "#8BADC1"
+    },
+    "[Night Owl]": {
+      "activityBar.background": "#000C1D",
+      "activityBar.border": "#102a44",
+      "editorGroup.border": "#102a44",
+      "sideBar.background": "#001122",
+      "sideBar.border": "#102a44",
+      "sideBar.foreground": "#8BADC1"
+    }
+  },
+  "workbench.colorTheme": "Night Owl",
+  "workbench.editorAssociations": {
+    "*.ipynb": "jupyter.notebook.ipynb",
+    "git-rebase-todo": "default"
+  },
+  "workbench.iconTheme": "vscode-icons",
+  "yaml.schemas": {
+    "file:///Users/younho9/.vscode/extensions/atlassian.atlascode-2.9.1/resources/schemas/pipelines-schema.json": "bitbucket-pipelines.yml"
+  }
+}
