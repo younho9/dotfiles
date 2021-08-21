@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+# Disable Private Browsing
+defaults write com.google.chrome IncognitoModeAvailability -integer 1
+defaults write com.microsoft.edge InPrivateModeAvailability -integer 1
+defaults write org.mozilla.firefox DisablePrivateBrowsing -integer 1
