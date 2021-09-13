@@ -1,2 +1,0 @@
-[user]
-        email = yhchoo@smilegate.com
