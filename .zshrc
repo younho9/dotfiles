@@ -15,6 +15,8 @@ plugins=(
   git-open
   zsh-syntax-highlighting
   zsh-autosuggestions
+  fzf
+  fasd
 )
 
 source $ZSH/oh-my-zsh.sh
