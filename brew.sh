@@ -6,6 +6,10 @@ brew update
 # Upgrade any already-installed formulae.
 brew upgrade
 
+# Install fonts.
+brew tap homebrew/cask-fonts
+brew install --cask font-fira-code
+
 # Install tools.
 brew install bat
 brew install fasd
@@ -16,7 +20,7 @@ brew install jq
 brew install nvm
 brew install tree
 
-# Install casks
+# Install apps.
 brew install --cask alfred
 brew install --cask cleanmymac
 brew install --cask discord
