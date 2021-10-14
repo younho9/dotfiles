@@ -13,14 +13,15 @@
 	new = checkout -b
 
 [core]
-	excludesfile = /Users/younho9/.gitignore_global
+	excludesfile = ~/.gitignore_global
+  editor = code --wait
 	ignorecase = false
 
 [pull]
 	rebase = true
 
 [commit]
-	template = /Users/younho9/.gitmessage.txt
+	template = ~/.gitmessage.txt
 
 [filter "lfs"]
 	clean = git-lfs clean -- %f
