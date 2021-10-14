@@ -19,6 +19,7 @@ brew install git
 brew install jq
 brew install nvm
 brew install tree
+brew install neofetch
 
 # Install apps.
 brew install --cask alfred
