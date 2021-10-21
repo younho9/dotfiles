@@ -1,5 +1,18 @@
 #!/usr/bin/env bash
 
+# install homebrew https://brew.sh
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+bash brew.sh
+
+echo "installing node (via nvm)"
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
+
+echo "node --version: $(node --version)"
+echo "npm --version: $(npm --version)"
+
+npm install --global yarn alfred-open-in-vscode
+
 # Disable Private Browsing
 defaults write com.google.chrome IncognitoModeAvailability -integer 1
 defaults write com.microsoft.edge InPrivateModeAvailability -integer 1
