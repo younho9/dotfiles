@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
 
-# install homebrew https://brew.sh
+# Install homebrew https://brew.sh
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
 bash brew.sh
 
+# Install node
 echo "installing node (via nvm)"
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
 
@@ -12,6 +13,8 @@ echo "node --version: $(node --version)"
 echo "npm --version: $(npm --version)"
 
 npm install --global yarn alfred-open-in-vscode
+
+bash bootstrap.sh
 
 # Disable Private Browsing
 defaults write com.google.chrome IncognitoModeAvailability -integer 1
