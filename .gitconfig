@@ -30,4 +30,4 @@
 	required = true
 
 [includeIf "gitdir:~/repositories/company/"]
-	path = ~/repositories/company/.gitconfig.company
+	path = ~/.gitconfig.company
