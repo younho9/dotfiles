@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Path to your oh-my-zsh installation.
-export ZSH="/Users/younho9/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
 
 # This loads nvm & bash_completion
 # See https://github.com/nvm-sh/nvm#git-install
@@ -9,4 +9,4 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-export GD=/Users/younho9/Google\ Drive/My\ Drive
+export GD="$HOME/Google Drive/My Drive"
