@@ -7,7 +7,7 @@
 
 [alias]
 	# See https://docs.gitlab.com/ee/user/project/merge_requests/reviews/#checkout-locally-by-adding-a-git-alias
-	mr = sh -c 'git fetch $1 merge-requests/$2/head:$1/merge-requests/$2 && git checkout $1/merge-requests/$2' -
+	mr = !sh -c 'git fetch $1 merge-requests/$2/head:$1/merge-requests/$2 && git checkout $1/merge-requests/$2' -
 	pr = !sh -c 'git fetch $1 pull/$2/head:$1/pull-requests/$2 && git checkout $1/pull-requests/$2' -
 	graph = log --branches --graph --oneline
 	new = checkout -b
