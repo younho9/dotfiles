@@ -31,3 +31,6 @@
 
 [includeIf "gitdir:~/repositories/company/"]
 	path = ~/.gitconfig.company
+
+[status]
+	submoduleSummary = true
