@@ -10,3 +10,7 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 export GD="$HOME/Google Drive/My Drive"
+
+# locale
+export LANG=ko_KR.UTF-8
+export LC_ALL=ko_KR.UTF-8
