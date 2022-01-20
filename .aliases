@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# Set Git language to English
+alias git='LC_ALL=en_US git'
+
 # Shortcuts
 alias dl="cd ~/Downloads"
 alias dt="cd ~/Desktop"
