@@ -14,3 +14,6 @@ export GD="$HOME/Google Drive/My Drive"
 # locale
 export LANG=ko_KR.UTF-8
 export LC_ALL=ko_KR.UTF-8
+
+# Fix idea terminal git log
+export LESSCHARSET=utf-8
