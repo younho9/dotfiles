@@ -6,6 +6,9 @@ source ~/.aliases
 # variables
 source ~/.exports
 
+# secret environments
+source ~/.secret
+
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 ZSH_THEME="powerlevel10k/powerlevel10k"
 
