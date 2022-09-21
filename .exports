@@ -17,3 +17,6 @@ export LC_ALL=ko_KR.UTF-8
 
 # Fix idea terminal git log
 export LESSCHARSET=utf-8
+
+# Uncomment the following line to change how often to auto-update (in days).
+export UPDATE_ZSH_DAYS=13
