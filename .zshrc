@@ -14,6 +14,7 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 
 # zsh plugins
 plugins=(
+  autoupdate
   git
   git-open
   zsh-syntax-highlighting
