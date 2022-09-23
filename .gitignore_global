@@ -26,3 +26,6 @@ yarn-error.log
 
 # eslint
 .eslintcache
+
+# nvmrc
+.nvmrc
