@@ -4242,7 +4242,7 @@
 				<real>0.83921569585800171</real>
 			</dict>
 			<key>Guid</key>
-			<string>D16592EB-DD31-4F24-920A-CD5660E616DB</string>
+			<string>CF7F0C36-A8C8-43D4-83DC-6C22BA8B953F</string>
 			<key>Has Hotkey</key>
 			<true/>
 			<key>Hide After Opening</key>
@@ -4268,7 +4268,7 @@
 			<key>HotKey Window AutoHides</key>
 			<true/>
 			<key>HotKey Window Dock Click Action</key>
-			<integer>0</integer>
+			<integer>1</integer>
 			<key>HotKey Window Floats</key>
 			<true/>
 			<key>HotKey Window Reopens On Activation</key>
@@ -4463,7 +4463,7 @@
 					<key>Label</key>
 					<string></string>
 					<key>Text</key>
-					<string>D16592EB-DD31-4F24-920A-CD5660E616DB</string>
+					<string>CF7F0C36-A8C8-43D4-83DC-6C22BA8B953F</string>
 					<key>Version</key>
 					<integer>1</integer>
 				</dict>
@@ -4819,7 +4819,7 @@
 			<key>Smart Cursor Color</key>
 			<false/>
 			<key>Space</key>
-			<integer>-1</integer>
+			<integer>0</integer>
 			<key>Status Bar Layout</key>
 			<dict>
 				<key>advanced configuration</key>
@@ -5092,7 +5092,7 @@
 	<key>PreserveWindowSizeWhenTabBarVisibilityChanges</key>
 	<true/>
 	<key>ShowFullScreenTabBar</key>
-	<true/>
+	<false/>
 	<key>ShowNewOutputIndicator</key>
 	<false/>
 	<key>SoundForEsc</key>
