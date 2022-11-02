@@ -87,7 +87,3 @@ nvm install node
 echo "node --version: $(node --version)"
 echo "npm --version: $(npm --version)"
 
-# Disable Private Browsing
-defaults write com.google.chrome IncognitoModeAvailability -integer 1
-defaults write com.microsoft.edge InPrivateModeAvailability -integer 1
-defaults write org.mozilla.firefox DisablePrivateBrowsing -integer 1
