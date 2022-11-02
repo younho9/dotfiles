@@ -18,6 +18,17 @@ ln -sf "$DOTFILES_DIR/.gitmessage.txt" "$HOME/.gitmessage.txt"
 ln -sf "$DOTFILES_DIR/.p10k.zsh" "$HOME/.p10k.zsh"
 ln -sf "$DOTFILES_DIR/.zshrc" "$HOME/.zshrc"
 
+# If macOS
+if [[ "$(uname)" == "Darwin" ]]; then
+  # If M1 arch
+	if [[ "$(arch)" == "arm64" ]]; then
+    export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:$PATH"
+	# If Intel arch
+  else
+    export PATH="/usr/local/bin:/usr/local/sbin:$PATH"
+  fi
+fi
+
 # Install homebrew https://brew.sh
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
