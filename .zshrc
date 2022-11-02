@@ -7,7 +7,7 @@ source ~/.aliases
 source ~/.exports
 
 # secret environments
-source ~/.secret
+source ~/.secrets
 
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 ZSH_THEME="powerlevel10k/powerlevel10k"
@@ -19,8 +19,6 @@ plugins=(
   git-open
   zsh-syntax-highlighting
   zsh-autosuggestions
-  fzf
-  fasd
 )
 
 source $ZSH/oh-my-zsh.sh
