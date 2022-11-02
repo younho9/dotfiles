@@ -1,20 +1,80 @@
 #!/usr/bin/env bash
 
+export DOTFILES_DIR="$HOME/repositories/github/public/dotfiles"
+
+if [ -d $DOTFILES_DIR ]; then
+	cd "$(dirname "${BASH_SOURCE}")";
+	git pull origin main
+else
+	git clone git@github.com:younho9/dotfiles.git $DOTFILES_DIR
+fi
+
+ln -sf "$DOTFILES_DIR/.aliases" "$HOME/.aliases"
+ln -sf "$DOTFILES_DIR/.exports" "$HOME/.exports"
+ln -sf "$DOTFILES_DIR/.gitconfig" "$HOME/.gitconfig"
+ln -sf "$DOTFILES_DIR/.gitconfig.company" "$HOME/.gitconfig.company"
+ln -sf "$DOTFILES_DIR/.gitignore_global" "$HOME/.gitignore_global"
+ln -sf "$DOTFILES_DIR/.gitmessage.txt" "$HOME/.gitmessage.txt"
+ln -sf "$DOTFILES_DIR/.p10k.zsh" "$HOME/.p10k.zsh"
+ln -sf "$DOTFILES_DIR/.zshrc" "$HOME/.zshrc"
+
 # Install homebrew https://brew.sh
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-bash brew.sh
+# Make sure we’re using the latest Homebrew.
+brew update
+
+# Upgrade any already-installed formulae.
+brew upgrade
+
+# Install fonts.
+brew tap homebrew/cask-fonts
+brew install --cask font-fira-code
+
+# Install tools.
+brew install bat
+brew install fasd
+brew install fzf
+brew install gh
+brew install git
+brew install jq
+brew install nvm
+brew install tree
+brew install neofetch
+
+# Install apps.
+brew install --cask alfred
+brew install --cask cleanmymac
+brew install --cask discord
+brew install --cask figma
+brew install --cask firefox
+brew install --cask google-chrome
+brew install --cask google-drive
+brew install --cask iterm2
+brew install --cask karabiner-elements
+brew install --cask keka
+brew install --cask macs-fan-control
+brew install --cask microsoft-edge
+brew install --cask notion
+brew install --cask openinterminal
+brew install --cask postman
+brew install --cask slack
+brew install --cask spotify
+brew install --cask typora
+brew install --cask visual-studio-code
+
+# Remove outdated versions from the cellar.
+brew cleanup
 
 # Install node
 echo "installing node (via nvm)"
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
 
+source ~/.zshrc
+nvm install node
+
 echo "node --version: $(node --version)"
 echo "npm --version: $(npm --version)"
-
-npm install --global yarn alfred-open-in-vscode
-
-bash bootstrap.sh
 
 # Disable Private Browsing
 defaults write com.google.chrome IncognitoModeAvailability -integer 1
