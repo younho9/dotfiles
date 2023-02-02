@@ -60,3 +60,6 @@ load-nvmrc() {
 }
 add-zsh-hook chpwd load-nvmrc
 load-nvmrc
+
+# python2
+eval "$(pyenv init --path)"
