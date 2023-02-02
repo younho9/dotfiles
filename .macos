@@ -53,6 +53,7 @@ brew upgrade
 brew tap homebrew/cask-fonts
 brew install --cask font-fira-code
 brew install --cask font-meslo-lg-nerd-font
+brew install --cask font-d2coding
 
 # Install tools.
 brew install bat
