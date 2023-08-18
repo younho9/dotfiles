@@ -132,6 +132,7 @@
         "configuration" : {
           "knobs" : {
             "base: priority" : 5,
+            "base: compression resistance" : 1,
             "shared text color" : {
               "Red Component" : 0.90000000000000002,
               "Color Space" : "sRGB",
@@ -139,7 +140,6 @@
               "Alpha Component" : 1,
               "Green Component" : 0.63
             },
-            "base: compression resistance" : 1,
             "format" : "M\/dd h:mm"
           },
           "layout advanced configuration dictionary value" : {
@@ -153,9 +153,9 @@
     ],
     "advanced configuration" : {
       "remove empty components" : false,
-      "auto-rainbow style" : 3,
       "font" : ".AppleSystemUIFont 12",
-      "algorithm" : 0
+      "algorithm" : 0,
+      "auto-rainbow style" : 3
     }
   },
   "Hide After Opening" : false,
@@ -558,7 +558,7 @@
     "Green Component" : 0.086274512112140656
   },
   "Blur" : true,
-  "Normal Font" : "MesloLGS-NF-Bold-Italic 18",
+  "Normal Font" : "MesloLGSNF-BoldItalic 15",
   "Vertical Spacing" : 1.1000000000000001,
   "Use Underline Color" : false,
   "Ansi 7 Color" : {
