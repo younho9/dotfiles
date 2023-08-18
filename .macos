@@ -65,6 +65,7 @@ brew install jq
 brew install nvm
 brew install tree
 brew install neofetch
+brew install pyenv
 
 # Install apps.
 brew install --cask alfred
@@ -88,6 +89,9 @@ brew install --cask spotify
 brew install --cask ticktick
 brew install --cask typora
 brew install --cask visual-studio-code
+brew install --cask arc
+brew install --cask raycast
+brew install --cask cron
 
 # Remove outdated versions from the cellar.
 brew cleanup
@@ -101,6 +105,16 @@ nvm install node
 
 echo "node --version: $(node --version)"
 echo "npm --version: $(npm --version)"
+
+# Install python 2
+pyenv install 2.7.18
+pyenv global 2.7.18
+export PATH="$(pyenv root)/shims:${PATH}"
+
+# Install Rosseta 2
+if [[ "$(arch)" == "arm64" ]]; then
+	softwareupdate --install-rosetta
+fi
 
 # Set macOS defaults https://macos-defaults.com/
 defaults write com.apple.dock "orientation" -string "left" && killall Dock
