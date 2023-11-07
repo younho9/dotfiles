@@ -81,6 +81,7 @@ brew install --cask karabiner-elements
 brew install --cask keka
 brew install --cask macs-fan-control
 brew install --cask microsoft-edge
+brew install --cask microsoft-remote-desktop
 brew install --cask notion
 brew install --cask obsidian
 brew install --cask openinterminal
