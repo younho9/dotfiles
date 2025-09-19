@@ -28,6 +28,8 @@
 
 	graph = log --branches --graph --oneline
 
+	wt = !sh -c 'git worktree add ./.gitworktree/$1 $1' -
+
 	new = checkout -b
 
 [core]
@@ -55,3 +57,6 @@
 
 [status]
 	submoduleSummary = true
+
+[rerere]
+	enabled = true
