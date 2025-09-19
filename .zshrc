@@ -1,65 +1,27 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 
-# aliases
-source ~/.aliases
+# ZSH Configuration - Main Entry Point
 
-# variables
-source ~/.exports
+# Load modules in order
+# Each module is responsible for its own configuration
 
-# secret environments
-source ~/.secrets
+# 1. Setup modules (must be first)
+source ~/.zsh/amazon-q-pre.zsh               # Amazon Q pre-block
 
-# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="powerlevel10k/powerlevel10k"
+# 2. Environment variables and aliases
+source ~/.aliases                            # Command aliases
+source ~/.exports                            # Environment variables
+source ~/.secrets                            # Secret environment variables
 
-# zsh plugins
-plugins=(
-  autoupdate
-  git
-  git-open
-  zsh-syntax-highlighting
-  zsh-autosuggestions
-)
+# 3. Oh My Zsh and theme
+source ~/.zsh/oh-my-zsh.zsh                  # Oh My Zsh plugins and theme
 
-source $ZSH/oh-my-zsh.sh
+# 4. Development tools
+source ~/.zsh/nvm.zsh                        # NVM
+source ~/.zsh/python.zsh                     # Python and pyenv
+source ~/.zsh/bun.zsh                        # bun
+source ~/.zsh/pnpm.zsh                       # pnpm
+source ~/.zsh/deno.zsh                       # deno
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-# Enable Powerlevel10k instant prompt.
-# See https://github.com/romkatv/powerlevel10k#how-do-i-enable-instant-prompt
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
-
-# This loads nvm & bash_completion
-# See https://github.com/nvm-sh/nvm#git-install
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-# place this after nvm initialization!
-# See https://github.com/nvm-sh/nvm#zsh
-autoload -U add-zsh-hook
-load-nvmrc() {
-  local node_version="$(nvm version)"
-  local nvmrc_path="$(nvm_find_nvmrc)"
-
-  if [ -n "$nvmrc_path" ]; then
-    local nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
-
-    if [ "$nvmrc_node_version" = "N/A" ]; then
-      nvm install
-    elif [ "$nvmrc_node_version" != "$node_version" ]; then
-      nvm use
-    fi
-  elif [ "$node_version" != "$(nvm version default)" ]; then
-    echo "Reverting to nvm default version"
-    nvm use default
-  fi
-}
-add-zsh-hook chpwd load-nvmrc
-load-nvmrc
-
-# python2
-eval "$(pyenv init --path)"
+# 5. Done setup (must be last)
+source ~/.zsh/amazon-q-post.zsh              # Amazon Q post-block

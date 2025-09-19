@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 
 mkdir "$HOME/repositories"
 mkdir "$HOME/repositories/company"
@@ -22,6 +22,7 @@ ln -sf "$GITHUB_PUBLIC/dotfiles/.gitignore_global" "$HOME/.gitignore_global"
 ln -sf "$GITHUB_PUBLIC/dotfiles/.gitmessage.txt" "$HOME/.gitmessage.txt"
 ln -sf "$GITHUB_PUBLIC/dotfiles/.p10k.zsh" "$HOME/.p10k.zsh"
 ln -sf "$GITHUB_PUBLIC/dotfiles/.zshrc" "$HOME/.zshrc"
+ln -sf "$GITHUB_PUBLIC/dotfiles/.zsh" "$HOME/.zsh"
 
 # Install oh-my-zsh https://ohmyz.sh/#install
 sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
