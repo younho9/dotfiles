@@ -1,11 +1,19 @@
 # Mac
 .DS_Store
 
-# VSCode
-.vscode/
+# VS Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/*.code-snippets
 
 # WebStorm
 .idea/
+
+# Cursor
+.cursor/
 
 # npm
 npm-debug.log
@@ -23,9 +31,17 @@ yarn-error.log
 
 # git
 *.patch
+.gitworktree/
 
 # eslint
 .eslintcache
 
 # nvmrc
 .nvmrc
+
+# task master
+.taskmaster/
+
+# local
+*.local.*
+.local/
