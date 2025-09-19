@@ -18,9 +18,7 @@
 			"args": [
 				"start-mcp-server",
 				"--context",
-				"ide-assistant",
-				"--project",
-				"$(pwd)"
+				"ide-assistant"
 			],
 			"env": {}
 		},
@@ -28,7 +26,9 @@
 			"type": "stdio",
 			"command": "npx",
 			"args": ["-y", "@morph-llm/morph-fast-apply"],
-			"env": {}
+			"env": {
+				"MORPH_API_KEY": "${MORPH_API_KEY}"
+      }
 		},
 		"filesystem": {
 			"command": "npx",
