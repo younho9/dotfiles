@@ -1,0 +1,105 @@
+{
+	"mcpServers": {
+		"sequential-thinking": {
+			"type": "stdio",
+			"command": "npx",
+			"args": ["-y", "@modelcontextprotocol/server-sequential-thinking"],
+			"env": {}
+		},
+		"playwright": {
+			"type": "stdio",
+			"command": "npx",
+			"args": ["-y", "@playwright/mcp@latest"],
+			"env": {}
+		},
+		"serena": {
+			"type": "stdio",
+			"command": "serena",
+			"args": [
+				"start-mcp-server",
+				"--context",
+				"ide-assistant",
+				"--project",
+				"$(pwd)"
+			],
+			"env": {}
+		},
+		"morphllm-fast-apply": {
+			"type": "stdio",
+			"command": "npx",
+			"args": ["-y", "@morph-llm/morph-fast-apply"],
+			"env": {}
+		},
+		"filesystem": {
+			"command": "npx",
+			"args": [
+				"-y",
+				"@modelcontextprotocol/server-filesystem",
+				"/Users/${USER}"
+			]
+		},
+		"gitlab": {
+			"command": "npx",
+			"args": ["-y", "@zereight/mcp-gitlab"],
+			"env": {
+				"GITLAB_PERSONAL_ACCESS_TOKEN": "${GITLAB_PERSONAL_ACCESS_TOKEN}",
+				"GITLAB_API_URL": "${GITLAB_API_URL}",
+				"GITLAB_READ_ONLY_MODE": "false",
+				"USE_GITLAB_WIKI": "false",
+				"USE_MILESTONE": "false",
+				"USE_PIPELINE": "false"
+			}
+		},
+		"jira": {
+			"command": "npx",
+			"args": [
+				"mcp-remote",
+				"${JIRA_MCP_URL}",
+				"--allow-http",
+				"--header",
+				"x-confluence-jira-username:${JIRA_USERNAME}",
+				"--header",
+				"x-confluence-jira-token:${JIRA_API_KEY}"
+			]
+		},
+		"confluence": {
+			"command": "npx",
+			"args": [
+				"mcp-remote",
+				"${CONFLUENCE_MCP_URL}",
+				"--allow-http",
+				"--header",
+				"x-confluence-wiki-username:${CONFLUENCE_USERNAME}",
+				"--header",
+				"x-confluence-wiki-token:${CONFLUENCE_API_KEY}"
+			]
+		},
+		"context7": {
+			"type": "sse",
+			"url": "https://mcp.context7.com/sse"
+		},
+		"figma": {
+			"type": "sse",
+			"url": "http://127.0.0.1:3845/sse"
+		},
+		"deepwiki": {
+			"type": "sse",
+			"url": "https://mcp.deepwiki.com/sse"
+		},
+		"github": {
+			"type": "http",
+			"url": "https://api.githubcopilot.com/mcp",
+			"headers": {
+				"Authorization": "Bearer ${GITHUB_COPILOT_API_KEY}"
+			}
+		},
+		"magic": {
+			"type": "stdio",
+			"command": "npx",
+			"args": ["-y", "@21st-dev/magic@latest"],
+			"env": {
+				"API_KEY": "${MAGIC_API_KEY}"
+			}
+		}
+	}
+}
