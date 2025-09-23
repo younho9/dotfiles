@@ -15,11 +15,7 @@
 		"serena": {
 			"type": "stdio",
 			"command": "serena",
-			"args": [
-				"start-mcp-server",
-				"--context",
-				"ide-assistant"
-			],
+			"args": ["start-mcp-server", "--context", "ide-assistant"],
 			"env": {}
 		},
 		"morphllm-fast-apply": {
@@ -28,7 +24,7 @@
 			"args": ["-y", "@morph-llm/morph-fast-apply"],
 			"env": {
 				"MORPH_API_KEY": "${MORPH_API_KEY}"
-      }
+			}
 		},
 		"filesystem": {
 			"command": "npx",
@@ -36,7 +32,10 @@
 				"-y",
 				"@modelcontextprotocol/server-filesystem",
 				"/Users/${USER}"
-			]
+			],
+			"env": {
+				"USER": "${USER}"
+			}
 		},
 		"gitlab": {
 			"command": "npx",
@@ -60,7 +59,12 @@
 				"x-confluence-jira-username:${JIRA_USERNAME}",
 				"--header",
 				"x-confluence-jira-token:${JIRA_API_KEY}"
-			]
+			],
+			"env": {
+				"JIRA_MCP_URL": "${JIRA_MCP_URL}",
+				"JIRA_USERNAME": "${JIRA_USERNAME}",
+				"JIRA_API_KEY": "${JIRA_API_KEY}"
+			}
 		},
 		"confluence": {
 			"command": "npx",
@@ -72,7 +76,12 @@
 				"x-confluence-wiki-username:${CONFLUENCE_USERNAME}",
 				"--header",
 				"x-confluence-wiki-token:${CONFLUENCE_API_KEY}"
-			]
+			],
+			"env": {
+				"CONFLUENCE_MCP_URL": "${CONFLUENCE_MCP_URL}",
+				"CONFLUENCE_USERNAME": "${CONFLUENCE_USERNAME}",
+				"CONFLUENCE_API_KEY": "${CONFLUENCE_API_KEY}"
+			}
 		},
 		"context7": {
 			"type": "sse",
@@ -91,6 +100,9 @@
 			"url": "https://api.githubcopilot.com/mcp",
 			"headers": {
 				"Authorization": "Bearer ${GITHUB_COPILOT_API_KEY}"
+			},
+			"env": {
+				"GITHUB_COPILOT_API_KEY": "${GITHUB_COPILOT_API_KEY}"
 			}
 		},
 		"magic": {
