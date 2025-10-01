@@ -33,6 +33,7 @@
 	new = checkout -b
 
 [core]
+	editor = cursor --wait
 	excludesfile = ~/.gitignore_global
 	ignorecase = false
 
