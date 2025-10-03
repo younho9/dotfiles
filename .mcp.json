@@ -1,31 +1,5 @@
 {
 	"mcpServers": {
-		"sequential-thinking": {
-			"type": "stdio",
-			"command": "npx",
-			"args": ["-y", "@modelcontextprotocol/server-sequential-thinking"],
-			"env": {}
-		},
-		"playwright": {
-			"type": "stdio",
-			"command": "npx",
-			"args": ["-y", "@playwright/mcp@latest"],
-			"env": {}
-		},
-		"serena": {
-			"type": "stdio",
-			"command": "serena",
-			"args": ["start-mcp-server", "--context", "ide-assistant"],
-			"env": {}
-		},
-		"morphllm-fast-apply": {
-			"type": "stdio",
-			"command": "npx",
-			"args": ["-y", "@morph-llm/morph-fast-apply"],
-			"env": {
-				"MORPH_API_KEY": "${MORPH_API_KEY}"
-			}
-		},
 		"filesystem": {
 			"command": "npx",
 			"args": [
@@ -36,60 +10,6 @@
 			"env": {
 				"USER": "${USER}"
 			}
-		},
-		"gitlab": {
-			"command": "npx",
-			"args": ["-y", "@zereight/mcp-gitlab"],
-			"env": {
-				"GITLAB_PERSONAL_ACCESS_TOKEN": "${GITLAB_PERSONAL_ACCESS_TOKEN}",
-				"GITLAB_API_URL": "${GITLAB_API_URL}",
-				"GITLAB_READ_ONLY_MODE": "false",
-				"USE_GITLAB_WIKI": "false",
-				"USE_MILESTONE": "false",
-				"USE_PIPELINE": "false"
-			}
-		},
-		"jira": {
-			"command": "npx",
-			"args": [
-				"mcp-remote",
-				"${JIRA_MCP_URL}",
-				"--allow-http",
-				"--header",
-				"x-confluence-jira-username:${JIRA_USERNAME}",
-				"--header",
-				"x-confluence-jira-token:${JIRA_API_KEY}"
-			],
-			"env": {
-				"JIRA_MCP_URL": "${JIRA_MCP_URL}",
-				"JIRA_USERNAME": "${JIRA_USERNAME}",
-				"JIRA_API_KEY": "${JIRA_API_KEY}"
-			}
-		},
-		"confluence": {
-			"command": "npx",
-			"args": [
-				"mcp-remote",
-				"${CONFLUENCE_MCP_URL}",
-				"--allow-http",
-				"--header",
-				"x-confluence-wiki-username:${CONFLUENCE_USERNAME}",
-				"--header",
-				"x-confluence-wiki-token:${CONFLUENCE_API_KEY}"
-			],
-			"env": {
-				"CONFLUENCE_MCP_URL": "${CONFLUENCE_MCP_URL}",
-				"CONFLUENCE_USERNAME": "${CONFLUENCE_USERNAME}",
-				"CONFLUENCE_API_KEY": "${CONFLUENCE_API_KEY}"
-			}
-		},
-		"context7": {
-			"type": "sse",
-			"url": "https://mcp.context7.com/sse"
-		},
-		"figma": {
-			"type": "sse",
-			"url": "http://127.0.0.1:3845/sse"
 		},
 		"deepwiki": {
 			"type": "sse",
@@ -105,13 +25,65 @@
 				"GITHUB_COPILOT_API_KEY": "${GITHUB_COPILOT_API_KEY}"
 			}
 		},
+		"chrome-devtools": {
+			"type": "stdio",
+			"command": "npx",
+			"args": ["-y", "chrome-devtools-mcp@latest"],
+			"env": {}
+		},
+		"tavily": {
+			"command": "npx",
+			"args": [
+				"-y",
+				"mcp-remote",
+				"https://mcp.tavily.com/mcp/?tavilyApiKey=${TAVILY_API_KEY}"
+			],
+			"env": {
+				"TAVILY_API_KEY": "${TAVILY_API_KEY}"
+			}
+		},
+		"playwright": {
+			"type": "stdio",
+			"command": "npx",
+			"args": ["-y", "@playwright/mcp@latest"],
+			"env": {}
+		},
+		"serena": {
+			"type": "stdio",
+			"command": "uvx",
+			"args": [
+				"--from",
+				"git+https://github.com/oraios/serena",
+				"serena",
+				"start-mcp-server",
+				"--context",
+				"ide-assistant"
+			],
+			"env": {}
+		},
+		"morphllm-fast-apply": {
+			"type": "stdio",
+			"command": "npx",
+			"args": ["-y", "@morph-llm/morph-fast-apply"],
+			"env": {}
+		},
 		"magic": {
 			"type": "stdio",
 			"command": "npx",
-			"args": ["-y", "@21st-dev/magic@latest"],
-			"env": {
-				"API_KEY": "${MAGIC_API_KEY}"
-			}
+			"args": ["-y", "@21st-dev/magic"],
+			"env": {}
+		},
+		"sequential-thinking": {
+			"type": "stdio",
+			"command": "npx",
+			"args": ["-y", "@modelcontextprotocol/server-sequential-thinking"],
+			"env": {}
+		},
+		"context7": {
+			"type": "stdio",
+			"command": "npx",
+			"args": ["-y", "@upstash/context7-mcp"],
+			"env": {}
 		}
 	}
 }
