@@ -5,3 +5,7 @@ if [[ ":$FPATH:" != *":$HOME/.zsh/completions:"* ]]; then export FPATH="$HOME/.z
 
 # deno
 . "$HOME/.deno/env"
+
+# Initialize zsh completions (added by deno install script)
+autoload -Uz compinit
+compinit
