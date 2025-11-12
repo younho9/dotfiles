@@ -52,7 +52,7 @@
 	process = git-lfs filter-process
 	required = true
 
-[includeIf "gitdir:~/repositories/company/"]
+[includeIf "gitdir/i:~/repositories/company/"]
 	path = ~/.gitconfig.company
 
 [status]
