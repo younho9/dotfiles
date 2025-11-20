@@ -12,6 +12,15 @@ else
 	export PATH="/usr/local/bin:/usr/local/sbin:$PATH"
 fi
 
+# Local binaries (uv, etc.)
+case ":${PATH}:" in
+    *:"$HOME/.local/bin":*)
+        ;;
+    *)
+        export PATH="$HOME/.local/bin:$PATH"
+        ;;
+esac
+
 export GD="$HOME/Google Drive/My Drive"
 
 # locale
@@ -31,4 +40,5 @@ export PIP_TRUSTED_HOST=files.pythonhosted.org
 # Zscaler CA certificate (only if file exists)
 if [[ -f ~/.ssl/certs/Zscaler_RootCA.pem ]]; then
     export NODE_EXTRA_CA_CERTS=~/.ssl/certs/Zscaler_RootCA.pem
+    export SSL_CERT_FILE=~/.ssl/certs/Zscaler_RootCA.pem
 fi
