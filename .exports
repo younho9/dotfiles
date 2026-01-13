@@ -37,8 +37,8 @@ export UPDATE_ZSH_DAYS=13
 export PIP_TRUSTED_HOST=pypi.org
 export PIP_TRUSTED_HOST=files.pythonhosted.org
 
-# Zscaler CA certificate (only if file exists)
-if [[ -f ~/.ssl/certs/Zscaler_RootCA.pem ]]; then
-    export NODE_EXTRA_CA_CERTS=~/.ssl/certs/Zscaler_RootCA.pem
-    export SSL_CERT_FILE=~/.ssl/certs/Zscaler_RootCA.pem
+# Custom CA bundle
+if [[ -f ~/.ssl/certs/custom-ca-bundle.pem ]]; then
+    export NODE_EXTRA_CA_CERTS=~/.ssl/certs/custom-ca-bundle.pem
+    export SSL_CERT_FILE=~/.ssl/certs/custom-ca-bundle.pem
 fi
