@@ -58,6 +58,7 @@ brew install --cask font-d2coding
 
 # Install tools.
 brew install bat
+brew install argocd
 brew install fzf
 brew install gh
 brew install glab
@@ -70,6 +71,7 @@ brew install pyenv
 brew install mas
 brew install 1password-cli
 brew install deno
+brew install gemini-cli
 
 # Install apps.
 brew install --cask figma
