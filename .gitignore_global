@@ -32,6 +32,7 @@ yarn-error.log
 # git
 *.patch
 .gitworktree/
+.gitworktrees/
 
 # eslint
 .eslintcache
@@ -48,3 +49,14 @@ yarn-error.log
 
 # serena
 .serena/
+
+# claude
+.claude/
+.mcp.json
+
+# gemini
+.gemini/
+
+# AI
+.prompts/
+opencode.jsonc
