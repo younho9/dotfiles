@@ -28,7 +28,7 @@
 
 	graph = log --branches --graph --oneline
 
-	wt = !sh -c 'git worktree add ./.gitworktree/$1 $1 && code ./.gitworktree/$1' -
+	wt = !sh -c 'git worktree add ./.gitworktrees/$1 $1 && code ./.gitworktrees/$1' -
 
 	new = checkout -b
 
