@@ -51,11 +51,7 @@ yarn-error.log
 .serena/
 
 # claude
-.claude/
-.mcp.json
-
-# gemini
-.gemini/
+.claude/plans/
 
 # AI
 .prompts/
