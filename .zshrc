@@ -19,3 +19,5 @@ source ~/.zsh/python.zsh                     # Python and pyenv
 source ~/.zsh/bun.zsh                        # bun
 source ~/.zsh/pnpm.zsh                       # pnpm
 source ~/.zsh/deno.zsh                       # deno
+source ~/.zsh/go.zsh                         # Go                        # nlm (NotebookLM CLI)
+

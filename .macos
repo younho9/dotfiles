@@ -59,6 +59,7 @@ brew install --cask font-d2coding
 # Install tools.
 brew install bat
 brew install argocd
+brew install go
 brew install fzf
 brew install gh
 brew install glab
