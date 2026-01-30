@@ -7,8 +7,8 @@
 
 # 1. Environment variables and aliases
 source ~/.aliases                            # Command aliases
-source ~/.exports                            # Environment variables
-source ~/.secrets                            # Secret environment variables
+source ~/.exports                            # Public exports (PATH, etc.)
+source ~/.env                                # Private environment variables
 
 # 2. Oh My Zsh and theme
 source ~/.zsh/oh-my-zsh.zsh                  # Oh My Zsh plugins and theme

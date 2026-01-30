@@ -13,8 +13,8 @@ export GITHUB_PUBLIC="$HOME/repositories/github/public"
 git clone https://github.com/younho9/dotfiles.git ${GITHUB_PUBLIC}/dotfiles
 git clone https://github.com/younho9/notes.younho9.com.git ${GITHUB_PUBLIC}/notes.younho9.com
 
-mkdir "$HOME/.secrets"
 ln -sf "$GITHUB_PUBLIC/dotfiles/.aliases" "$HOME/.aliases"
+ln -sf "$GITHUB_PUBLIC/dotfiles/.env" "$HOME/.env"
 ln -sf "$GITHUB_PUBLIC/dotfiles/.exports" "$HOME/.exports"
 ln -sf "$GITHUB_PUBLIC/dotfiles/.gitconfig" "$HOME/.gitconfig"
 ln -sf "$GITHUB_PUBLIC/dotfiles/.gitconfig.company" "$HOME/.gitconfig.company"
