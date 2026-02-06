@@ -21,3 +21,5 @@ source ~/.zsh/pnpm.zsh                       # pnpm
 source ~/.zsh/deno.zsh                       # deno
 source ~/.zsh/go.zsh                         # Go                        # nlm (NotebookLM CLI)
 
+
+alias claude-mem='bun "/Users/yhchoo/.claude/plugins/marketplaces/thedotmack/plugin/scripts/worker-service.cjs"'
