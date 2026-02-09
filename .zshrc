@@ -8,6 +8,7 @@
 # 1. Environment variables and aliases
 source ~/.aliases                            # Command aliases
 source ~/.exports                            # Public exports (PATH, etc.)
+[[ -f ~/.secrets ]] && source ~/.secrets     # Local secrets (not in git)
 source ~/.env                                # Private environment variables
 
 # 2. Oh My Zsh and theme
