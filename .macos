@@ -10,8 +10,8 @@ mkdir "$HOME/repositories/github/public"
 
 export GITHUB_PUBLIC="$HOME/repositories/github/public"
 
-git clone https://github.com/younho9/dotfiles.git ${GITHUB_PUBLIC}/dotfiles
-git clone https://github.com/younho9/notes.younho9.com.git ${GITHUB_PUBLIC}/notes.younho9.com
+mv "$(pwd)" "${GITHUB_PUBLIC}/dotfiles"
+
 
 ln -sf "$GITHUB_PUBLIC/dotfiles/.aliases" "$HOME/.aliases"
 ln -sf "$GITHUB_PUBLIC/dotfiles/.env" "$HOME/.env"
