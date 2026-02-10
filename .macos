@@ -114,6 +114,10 @@ nvm install node
 echo "node --version: $(node --version)"
 echo "npm --version: $(npm --version)"
 
+# Install corepack
+npm install --global corepack@latest
+corepack enable pnpm
+
 # Install python 3
 pyenv install 3.12.8
 pyenv global 3.12.8
