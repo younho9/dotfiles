@@ -22,5 +22,7 @@ source ~/.zsh/pnpm.zsh                       # pnpm
 source ~/.zsh/deno.zsh                       # deno
 source ~/.zsh/go.zsh                         # Go                        # nlm (NotebookLM CLI)
 
+# bun completions
+[ -s "~/.bun/_bun" ] && source "~/.bun/_bun"
 
-alias claude-mem='bun "/Users/yhchoo/.claude/plugins/marketplaces/thedotmack/plugin/scripts/worker-service.cjs"'
+alias claude-mem='bun "~/.claude/plugins/marketplaces/thedotmack/plugin/scripts/worker-service.cjs"'
