@@ -114,9 +114,9 @@ nvm install node
 echo "node --version: $(node --version)"
 echo "npm --version: $(npm --version)"
 
-# Install python 2
-pyenv install 2.7.18
-pyenv global 2.7.18
+# Install python 3
+pyenv install 3.12.8
+pyenv global 3.12.8
 export PATH="$(pyenv root)/shims:${PATH}"
 
 # Install Rosseta 2
