@@ -12,6 +12,9 @@ export GITHUB_PUBLIC="$HOME/repositories/github/public"
 
 mv "$(pwd)" "${GITHUB_PUBLIC}/dotfiles"
 
+# Setup .claude config
+[[ -d "$HOME/.claude" ]] && mv "$HOME/.claude" "$HOME/.claude.backup.$(date +%Y%m%d_%H%M%S)"
+git clone https://github.com/younho9/.claude.git "$HOME/.claude"
 
 ln -sf "$GITHUB_PUBLIC/dotfiles/.aliases" "$HOME/.aliases"
 ln -sf "$GITHUB_PUBLIC/dotfiles/.env" "$HOME/.env"
