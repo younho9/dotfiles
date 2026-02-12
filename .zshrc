@@ -8,8 +8,7 @@
 # 1. Environment variables and aliases
 source ~/.aliases                            # Command aliases
 source ~/.exports                            # Public exports (PATH, etc.)
-[[ -f ~/.secrets ]] && source ~/.secrets     # Local secrets (not in git)
-source ~/.env                                # Private environment variables
+source ~/.config/op/env.zsh                  # 1Password environment variables
 
 # 2. Oh My Zsh and theme
 source ~/.zsh/oh-my-zsh.zsh                  # Oh My Zsh plugins and theme
@@ -26,3 +25,6 @@ source ~/.zsh/go.zsh                         # Go                        # nlm (
 [ -s "~/.bun/_bun" ] && source "~/.bun/_bun"
 
 alias claude-mem='bun "~/.claude/plugins/marketplaces/thedotmack/plugin/scripts/worker-service.cjs"'
+
+# OpenClaw Completion
+source ~/.openclaw/completions/openclaw.zsh
