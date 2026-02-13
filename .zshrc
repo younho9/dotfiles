@@ -27,4 +27,4 @@ source ~/.zsh/go.zsh                         # Go                        # nlm (
 alias claude-mem='bun "~/.claude/plugins/marketplaces/thedotmack/plugin/scripts/worker-service.cjs"'
 
 # OpenClaw Completion
-source ~/.openclaw/completions/openclaw.zsh
+[[ -f ~/.openclaw/completions/openclaw.zsh ]] && source ~/.openclaw/completions/openclaw.zsh
