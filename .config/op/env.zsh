@@ -2,10 +2,9 @@
 # op:// references are resolved at runtime via `op run --env-file`.
 # No op:// values are exported to the shell environment.
 
-op-me() { op "$@" }
-op-me-run() { op run --env-file ~/.config/op/personal.env -- "$@" }
-op-sg() { OP_SERVICE_ACCOUNT_TOKEN="$(op read op://Personal/SMILEGATE_SA_TOKEN/credential)" op "$@" }
-op-sg-run() { OP_SERVICE_ACCOUNT_TOKEN="$(op read op://Personal/SMILEGATE_SA_TOKEN/credential)" op run --env-file ~/.config/op/smilegate.env -- "$@" }
+# Symlink OP_ENV_FILE → .env for op run
+[[ -n "${OP_ENV_FILE}" ]] && ln -sf "${OP_ENV_FILE}" ~/.env
 
-# Machine-local settings
-[[ -f ~/.config/op/env.local.zsh ]] && source ~/.config/op/env.local.zsh
+# Account wrappers
+op-me() { OP_SERVICE_ACCOUNT_TOKEN="" op "$@" }
+op-sg() { OP_SERVICE_ACCOUNT_TOKEN="$(op read op://Personal/SMILEGATE_SA_TOKEN/credential)" op "$@" }
