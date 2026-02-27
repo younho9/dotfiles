@@ -52,7 +52,13 @@ yarn-error.log
 .serena/
 
 # claude
-.claude/plans/
+.claude/*
+!.claude/CLAUDE.md
+!.claude/settings.json
+!.claude/rules
+!.claude/hooks
+!.claude/commands
+!.claude/skills
 
 # AI
 .prompts/
