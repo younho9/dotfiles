@@ -36,6 +36,7 @@
 	editor = code --wait
 	excludesfile = ~/.gitignore_global
 	ignorecase = false
+	pager = delta
 
 [push]
 	autoSetupRemote = true
@@ -60,3 +61,14 @@
 
 [rerere]
 	enabled = true
+
+[interactive]
+	diffFilter = delta --color-only
+
+[delta]
+	navigate = true
+	side-by-side = true
+	line-numbers = true
+
+[merge]
+	conflictstyle = zdiff3
