@@ -98,6 +98,10 @@ brew cleanup
 envsubst < "$HOME/.dotfiles/.mrconfig.tmpl" > "$HOME/.mrconfig"
 mr checkout
 
+# Link skills repo to global agent skills directory
+mkdir -p "$HOME/.agents"
+ln -sf "$HOME/repositories/github/public/skills/skills" "$HOME/.agents/skills"
+
 # Install node
 echo "installing node (via nvm)"
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
