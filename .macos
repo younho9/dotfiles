@@ -1,11 +1,5 @@
 #!/usr/bin/env zsh
 
-mkdir -p "$HOME/repositories/github/public"
-mkdir -p "$HOME/repositories/github/private"
-mkdir -p "$HOME/repositories/github/organizations"
-mkdir -p "$HOME/repositories/company/organizations"
-mkdir -p "$HOME/repositories/company/personal"
-
 ln -sf "$HOME/.dotfiles/.aliases" "$HOME/.aliases"
 ln -sf "$HOME/.dotfiles/.env" "$HOME/.env"
 ln -sf "$HOME/.dotfiles/.exports" "$HOME/.exports"
