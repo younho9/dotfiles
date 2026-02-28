@@ -11,11 +11,4 @@ checkout =
   ln -sf "$HOME/repositories/github/public/skills/skills" "$HOME/.agents/skills"
 
 [$HOME/.claude]
-checkout =
-  [[ -d "$HOME/.claude" ]] && mv "$HOME/.claude" "$HOME/.claude.backup.$(date +%Y%m%d_%H%M%S)"
-  git clone https://github.com/younho9/.claude.git $HOME/.claude
-update =
-  git add -A
-  git diff --cached --quiet || git commit -m "auto: sync $(date '+%Y-%m-%d %H:%M')"
-  git pull --rebase --quiet
-  git push --quiet
+checkout = git clone https://github.com/younho9/.claude.git $HOME/.claude
