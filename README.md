@@ -3,5 +3,5 @@
 ## Installation
 
 ```sh
-git clone https://github.com/younho9/dotfiles.git && cd dotfiles && source .macos
+git clone https://github.com/younho9/dotfiles.git ~/.dotfiles && source ~/.dotfiles/.macos
 ```
