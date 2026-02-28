@@ -5,7 +5,10 @@ update = git pull --ff-only --quiet
 checkout = git clone https://github.com/younho9/dotfiles.git $HOME/.dotfiles
 
 [$HOME/repositories/github/public/skills]
-checkout = git clone https://github.com/younho9/skills.git $HOME/repositories/github/public/skills
+checkout =
+  git clone https://github.com/younho9/skills.git $HOME/repositories/github/public/skills
+  mkdir -p "$HOME/.agents"
+  ln -sf "$HOME/repositories/github/public/skills/skills" "$HOME/.agents/skills"
 
 [$HOME/.claude]
 checkout =
