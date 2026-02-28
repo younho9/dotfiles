@@ -1,0 +1,18 @@
+[keys.normal]
+space.g = [
+  ":write-all",
+  ":new",
+  ":insert-output lazygit",
+  ":buffer-close!",
+  ":redraw",
+  ":reload-all",
+]
+space.e = [
+  ":sh rm -f /tmp/yazi-file",
+  ":insert-output yazi '%{buffer_name}' --chooser-file=/tmp/yazi-file",
+  ":sh printf '\\x1b[?1049h\\x1b[?2004h' > /dev/tty",
+  ":set-option mouse false",
+  ":set-option mouse true",
+  ":open %sh{cat /tmp/yazi-file}",
+  ":redraw",
+]
