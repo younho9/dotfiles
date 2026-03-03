@@ -4,11 +4,11 @@ update = git pull --ff-only --quiet
 [$HOME/.dotfiles]
 checkout = git clone https://github.com/younho9/dotfiles.git $HOME/.dotfiles
 
-[$HOME/repositories/github/public/skills]
+[$HOME/.skills]
 checkout =
-  git clone https://github.com/younho9/skills.git $HOME/repositories/github/public/skills
+  git clone https://github.com/younho9/skills.git $HOME/.skills
   mkdir -p "$HOME/.agents"
-  ln -sf "$HOME/repositories/github/public/skills/skills" "$HOME/.agents/skills"
+  ln -sf "$HOME/.skills/skills" "$HOME/.agents/skills"
 
 [$HOME/.claude]
 checkout = git clone https://github.com/younho9/.claude.git $HOME/.claude
