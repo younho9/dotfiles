@@ -98,6 +98,9 @@ brew cleanup
 envsubst < "$HOME/.dotfiles/.mrconfig.tmpl" > "$HOME/.mrconfig"
 mr checkout
 
+# Install LaunchAgents
+bash "$HOME/.dotfiles/launchd/install.sh"
+
 # Install node
 echo "installing node (via nvm)"
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash

@@ -1,5 +1,10 @@
 [DEFAULT]
 update = git pull --ff-only --quiet
+sync =
+  git add -A &&
+  git diff --cached --quiet || git commit -m "auto: sync $(date +%Y-%m-%d)" &&
+  git pull --rebase --quiet &&
+  git push --quiet
 
 [$HOME/.dotfiles]
 checkout = git clone https://github.com/younho9/dotfiles.git $HOME/.dotfiles
@@ -12,3 +17,6 @@ checkout =
 
 [$HOME/.claude]
 checkout = git clone https://github.com/younho9/.claude.git $HOME/.claude
+
+[$HOME/Obsidian/confluence]
+checkout = git clone https://github.com/younho9/confluence.git $HOME/Obsidian/confluence
