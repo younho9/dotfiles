@@ -1,5 +1,16 @@
 [mgr]
+ratio = [1, 3, 4]
 show_hidden = true
 
 [opener]
-edit = [{ run = 'hx "$@"', block = true }]
+edit = [{ run = 'vim "$@"', block = true }]
+
+[[plugin.prepend_fetchers]]
+id = "git"
+url = "*"
+run = "git"
+
+[[plugin.prepend_fetchers]]
+id = "git"
+url = "*/"
+run = "git"

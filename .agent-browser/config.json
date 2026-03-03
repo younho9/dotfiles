@@ -1,3 +1,4 @@
 {
-  "headed": true
+  "headed": true,
+  "profile": "~/.agent-browser/profiles/default"
 }
