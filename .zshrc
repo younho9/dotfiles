@@ -7,6 +7,7 @@
 
 # 1. Environment variables and aliases
 source ~/.aliases                                           # Command aliases
+[[ -f ~/.aliases.local ]] && source ~/.aliases.local        # Machine-local aliases (git-untracked)
 source ~/.exports                                           # Public exports (PATH, etc.)
 [[ -f ~/.config/op/op.env ]] && source ~/.config/op/op.env  # Machine-local env vars
 source ~/.config/op/env.zsh                                 # 1Password environment variables
