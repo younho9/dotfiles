@@ -10,9 +10,8 @@ source ~/.aliases                                           # Command aliases
 [[ -f ~/.aliases.local ]] && source ~/.aliases.local        # Machine-local aliases (git-untracked)
 source ~/.exports                                           # Public exports (PATH, etc.)
 source ~/.zsh/op-sync.zsh                                    # 1Password file sync (auto)
-[[ -f ~/.op-sync/op.env-${HOST} ]] && source ~/.op-sync/op.env-${HOST} # Machine-local env vars
-[[ -n "${OP_ENV_FILE}" ]] && ln -sf "${OP_ENV_FILE}" ~/.env # Symlink for `op run`
-[[ -f ~/.env ]] && { set -a; source ~/.env; set +a; }       # 1Password op:// references (exported)
+[[ -f ~/.op-sync/op.env-${HOST} ]] && ln -sf "$HOME/.op-sync/op.env-${HOST}" ~/.env  # Symlink for `op run`
+[[ -f ~/.env ]] && { set -a; source ~/.env; set +a; }       # Machine env + op:// references (exported)
 
 # 2. Oh My Zsh and theme
 source ~/.zsh/oh-my-zsh.zsh                                  # Oh My Zsh plugins and theme
