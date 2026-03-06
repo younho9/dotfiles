@@ -12,6 +12,7 @@ ln -sf "$HOME/.dotfiles/.zshrc" "$HOME/.zshrc"
 ln -sf "$HOME/.dotfiles/.zsh" "$HOME/.zsh"
 ln -sf "$HOME/.dotfiles/.config/helix" "$HOME/.config/helix"
 ln -sf "$HOME/.dotfiles/.config/yazi" "$HOME/.config/yazi"
+mkdir -p -m 700 "$HOME/.op-sync"
 mkdir -p "$HOME/.agent-browser"
 ln -sf "$HOME/.dotfiles/.agent-browser/config.json" "$HOME/.agent-browser/config.json"
 
