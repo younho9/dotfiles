@@ -5,6 +5,8 @@
 OP_SYNC_FILES=(
   "$HOME/.aliases.local:.aliases.local"
   "$HOME/.dotfiles/.config/op/${HOST}.env:.${HOST}.env"
+  "$HOME/.aws/credentials:.aws-credentials"
+  "$HOME/.aws/config:.aws-config"
 )
 
 # Personal vault access (ignore SA token)
