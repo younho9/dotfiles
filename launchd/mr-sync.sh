@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Load environment variables (1Password SA token, etc.)
+[ -f "$HOME/.env" ] && set -a && . "$HOME/.env" && set +a
+
 LOG_DIR="$HOME/.local/log"
 LOG_FILE="$LOG_DIR/mr-sync.log"
 LOCK_DIR="$HOME/.local/state/mr-sync.lock"
