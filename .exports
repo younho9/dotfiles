@@ -41,4 +41,5 @@ export PIP_TRUSTED_HOST=files.pythonhosted.org
 if [[ -f ~/.ssl/certs/custom-ca-bundle.pem ]]; then
     export NODE_EXTRA_CA_CERTS=~/.ssl/certs/custom-ca-bundle.pem
     export SSL_CERT_FILE=~/.ssl/certs/custom-ca-bundle.pem
+    export AWS_CA_BUNDLE=~/.ssl/certs/custom-ca-bundle.pem
 fi
