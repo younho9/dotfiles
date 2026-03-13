@@ -119,6 +119,9 @@ echo "npm --version: $(npm --version)"
 npm install --global corepack@latest
 corepack enable pnpm
 
+# Install ctx7 (Context7 CLI)
+npm install --global ctx7
+
 # Install python 3
 pyenv install 3.12.8
 pyenv global 3.12.8

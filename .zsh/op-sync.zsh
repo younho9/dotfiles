@@ -7,6 +7,7 @@ OP_SYNC_FILES=(
   "$HOME/.dotfiles/.config/op/${HOST}.env:.${HOST}.env"
   "$HOME/.dotfiles/.aws/credentials:.aws-credentials"
   "$HOME/.dotfiles/.aws/config:.aws-config"
+  "$HOME/.ssl/certs/custom-ca-bundle.pem:.ssl-custom-ca-bundle"
 )
 
 # Personal vault access (ignore SA token)
