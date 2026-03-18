@@ -23,6 +23,7 @@ source ~/.zsh/bun.zsh                                        # bun
 source ~/.zsh/pnpm.zsh                                       # pnpm
 source ~/.zsh/deno.zsh                                       # deno
 source ~/.zsh/go.zsh                                         # Go
+source ~/.zsh/vite-plus.zsh                                  # Vite+
 
 # bun completions
 [ -s "~/.bun/_bun" ] && source "~/.bun/_bun"
