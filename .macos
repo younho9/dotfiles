@@ -99,7 +99,8 @@ brew install --cask 1password
 brew cleanup
 
 # Checkout all repos (dotfiles already exists, mr skips it)
-envsubst < "$HOME/.dotfiles/.mrconfig.tmpl" > "$HOME/.mrconfig"
+envsubst < "$HOME/.dotfiles/.mrconfig.tmpl" > "$HOME/.dotfiles/.mrconfig"
+ln -sf "$HOME/.dotfiles/.mrconfig" "$HOME/.mrconfig"
 mr checkout
 
 # Install LaunchAgents
