@@ -44,5 +44,3 @@ if [[ -f ~/.ssl/certs/custom-ca-bundle.pem ]]; then
     export AWS_CA_BUNDLE=~/.ssl/certs/custom-ca-bundle.pem
 fi
 
-# agent-browser: 디렉토리+브랜치 기반 세션 격리
-export AGENT_BROWSER_SESSION="$(basename "$PWD")-$(git branch --show-current 2>/dev/null || echo no-git)"
