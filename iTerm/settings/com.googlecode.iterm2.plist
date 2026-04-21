@@ -25,18 +25,22 @@
 	<key>AitermURL</key>
 	<string>https://api.openai.com/v1/responses</string>
 	<key>Default Bookmark Guid</key>
-	<string>BE825847-1767-4CCA-81BC-730A3A6C75B2</string>
+	<string>D16592EB-DD31-4F24-920A-CD5660E616DB</string>
 	<key>HapticFeedbackForEsc</key>
 	<false/>
-	<key>HideFromDockAndAppSwitcher</key>
-	<true/>
-	<key>HideMenuBarInFullscreen</key>
-	<true/>
+	<key>Hotkey</key>
+	<false/>
+	<key>HotkeyChar</key>
+	<integer>0</integer>
+	<key>HotkeyCode</key>
+	<integer>0</integer>
 	<key>HotkeyMigratedFromSingleToMulti</key>
 	<true/>
-	<key>NeverWarnAboutShortLivedSessions_BE825847-1767-4CCA-81BC-730A3A6C75B2</key>
+	<key>HotkeyModifiers</key>
+	<integer>0</integer>
+	<key>NeverWarnAboutShortLivedSessions_D16592EB-DD31-4F24-920A-CD5660E616DB</key>
 	<true/>
-	<key>NeverWarnAboutShortLivedSessions_BE825847-1767-4CCA-81BC-730A3A6C75B2_selection</key>
+	<key>NeverWarnAboutShortLivedSessions_D16592EB-DD31-4F24-920A-CD5660E616DB_selection</key>
 	<integer>0</integer>
 	<key>New Bookmarks</key>
 	<array>
@@ -383,7 +387,7 @@
 				<real>0.83921569585800171</real>
 			</dict>
 			<key>Guid</key>
-			<string>BE825847-1767-4CCA-81BC-730A3A6C75B2</string>
+			<string>D16592EB-DD31-4F24-920A-CD5660E616DB</string>
 			<key>Has Hotkey</key>
 			<true/>
 			<key>Hide After Opening</key>
@@ -596,6 +600,17 @@
 					<integer>12</integer>
 					<key>Text</key>
 					<string>9</string>
+				</dict>
+				<key>0x74-0x100000-0x0</key>
+				<dict>
+					<key>Action</key>
+					<integer>27</integer>
+					<key>Label</key>
+					<string></string>
+					<key>Text</key>
+					<string>D16592EB-DD31-4F24-920A-CD5660E616DB</string>
+					<key>Version</key>
+					<integer>1</integer>
 				</dict>
 				<key>0x7f-0x100000-0x0</key>
 				<dict>
@@ -1164,15 +1179,48 @@
 	<true/>
 	<key>OpenNoWindowsAtStartup</key>
 	<true/>
+	<key>PointerActions</key>
+	<dict>
+		<key>Button,1,1,,</key>
+		<dict>
+			<key>Action</key>
+			<string>kContextMenuPointerAction</string>
+		</dict>
+		<key>Button,2,1,,</key>
+		<dict>
+			<key>Action</key>
+			<string>kPasteFromClipboardPointerAction</string>
+		</dict>
+		<key>Gesture,ThreeFingerSwipeDown,,</key>
+		<dict>
+			<key>Action</key>
+			<string>kPrevWindowPointerAction</string>
+		</dict>
+		<key>Gesture,ThreeFingerSwipeLeft,,</key>
+		<dict>
+			<key>Action</key>
+			<string>kPrevTabPointerAction</string>
+		</dict>
+		<key>Gesture,ThreeFingerSwipeRight,,</key>
+		<dict>
+			<key>Action</key>
+			<string>kNextTabPointerAction</string>
+		</dict>
+		<key>Gesture,ThreeFingerSwipeUp,,</key>
+		<dict>
+			<key>Action</key>
+			<string>kNextWindowPointerAction</string>
+		</dict>
+	</dict>
 	<key>SoundForEsc</key>
 	<false/>
 	<key>StatusBarPosition</key>
 	<integer>1</integer>
 	<key>TabStyleWithAutomaticOption</key>
 	<integer>5</integer>
-	<key>UIElementRequiresHotkeys</key>
-	<true/>
 	<key>VisualIndicatorForEsc</key>
 	<false/>
+	<key>findMode_iTerm</key>
+	<integer>0</integer>
 </dict>
 </plist>
