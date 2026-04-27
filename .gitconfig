@@ -72,3 +72,6 @@
 
 [merge]
 	conflictstyle = zdiff3
+[spice "forge.gitlab"]
+	url = https://git.sginfra.net
+	apiUrl = https://git.sginfra.net/api/v4
