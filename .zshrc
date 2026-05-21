@@ -34,3 +34,6 @@ alias claude-mem='bun "~/.claude/plugins/marketplaces/thedotmack/plugin/scripts/
 
 # OpenClaw Completion
 [[ -f ~/.openclaw/completions/openclaw.zsh ]] && source ~/.openclaw/completions/openclaw.zsh
+
+# cmux ↔ VS Code workspace 동기화 (cmux surface 의 zsh 에서만 자동 실행)
+source ~/.zsh/cmux-vscode-sync.zsh

@@ -1,0 +1,80 @@
+#!/usr/bin/env bash
+# cmux 의 workspace.selected 이벤트를 받아 VS Code 윈도우를 동기화한다.
+# - 이미 그 폴더를 연 VS Code 윈도우가 있으면 AXRaise (cmux 포커스 유지)
+# - 없으면 code <path> (이 경우 한 번 activate 됨)
+
+set -uo pipefail
+
+LOG="${HOME}/.cache/cmux/vscode-sync.log"
+CURSOR="${HOME}/.cache/cmux/vscode-sync.seq"
+mkdir -p "$(dirname "$LOG")"
+
+log() { printf '[%s] %s\n' "$(date '+%Y-%m-%dT%H:%M:%S')" "$*" >> "$LOG"; }
+
+# stdout/stderr 도 같은 로그로 모아두기 (launchd 의 StandardOutPath/ErrorPath 와는 별개)
+exec >>"$LOG" 2>&1
+
+try_raise_window() {
+  # 보이는 VS Code 윈도우 중 폴더명 포함 매칭. 찾으면 AXRaise 후 "raised" 반환.
+  # macOS System Events 는 현재 desktop 의 visible 윈도우만 보이므로 다른 desktop/hidden 윈도우는 실패.
+  local result
+  result="$(FOLDER="$1" osascript <<'APPLESCRIPT' 2>/dev/null
+set theFolder to (system attribute "FOLDER")
+tell application "System Events"
+  if not (exists process "Code") then
+    return "no-process"
+  end if
+  tell process "Code"
+    repeat with w in windows
+      if name of w contains theFolder then
+        perform action "AXRaise" of w
+        return "raised"
+      end if
+    end repeat
+  end tell
+end tell
+return "no-window"
+APPLESCRIPT
+  )"
+  [[ "$result" == "raised" ]]
+}
+
+sync_workspace() {
+  local cwd="$1"
+  if [[ -z "$cwd" || ! -d "$cwd" ]]; then
+    log "skip: invalid cwd '$cwd'"
+    return
+  fi
+
+  local folder="${cwd##*/}"
+
+  if try_raise_window "$folder"; then
+    log "raise: $cwd"
+  else
+    log "open : $cwd (raise failed — hidden/other-desktop/not-yet-open)"
+    code "$cwd" >/dev/null 2>&1 || log "  code <path> failed"
+    # code 가 VS Code 를 activate 시키므로 즉시 cmux 로 frontmost 복귀
+    osascript -e 'tell application "cmux" to activate' >/dev/null 2>&1
+  fi
+}
+
+log "==== cmux-vscode-sync starting (pid=$$) ===="
+log "code=$(command -v code) cmux=$(command -v cmux) jq=$(command -v jq)"
+
+RAW="${HOME}/.cache/cmux/vscode-sync.raw"
+: >"$RAW"
+cmux events \
+  --name workspace.selected \
+  --reconnect \
+  --no-heartbeat \
+  --cursor-file "$CURSOR" \
+  2>>"$LOG" \
+| tee -a "$RAW" \
+| while IFS= read -r line; do
+    case "$line" in
+      *'"type":"event"'*) ;;
+      *) continue ;;
+    esac
+    cwd="$(printf '%s' "$line" | jq -r '.payload.cwd // empty' 2>/dev/null)"
+    [[ -n "$cwd" ]] && sync_workspace "$cwd"
+  done
