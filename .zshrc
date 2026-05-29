@@ -36,4 +36,5 @@ alias claude-mem='bun "~/.claude/plugins/marketplaces/thedotmack/plugin/scripts/
 [[ -f ~/.openclaw/completions/openclaw.zsh ]] && source ~/.openclaw/completions/openclaw.zsh
 
 # cmux ↔ VS Code workspace 동기화 (cmux surface 의 zsh 에서만 자동 실행)
-source ~/.zsh/cmux-vscode-sync.zsh
+# 비활성화: VS Code 메모리 사용량 문제로 Zed 전환 검토 중 (2026-05-29)
+# source ~/.zsh/cmux-vscode-sync.zsh
