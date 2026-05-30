@@ -1,0 +1,284 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+OUT_DIR="${1:-$HOME/repositories/_inventory}"
+mkdir -p "$OUT_DIR"
+
+REMOTE_JSONL="$OUT_DIR/github-repos.jsonl"
+REMOTE_TSV="$OUT_DIR/github-repos.tsv"
+LOCAL_JSON="$OUT_DIR/local-repos.json"
+REPORT_MD="$OUT_DIR/reconciliation.md"
+TIER_YAML="$OUT_DIR/tier-groups.yaml"
+
+run_gh() {
+  if gh auth status >/dev/null 2>&1; then
+    gh "$@"
+    return
+  fi
+
+  if command -v op >/dev/null 2>&1 && [[ -f "$HOME/.env" ]]; then
+    # Export OP_SERVICE_ACCOUNT_TOKEN when ~/.env contains it, so op can resolve op:// references.
+    set -a
+    # shellcheck disable=SC1090
+    source "$HOME/.env" >/dev/null 2>&1 || true
+    set +a
+    op run --env-file "$HOME/.env" -- gh "$@"
+    return
+  fi
+
+  echo "error: gh is not authenticated and op ~/.env fallback is unavailable" >&2
+  echo "hint: run 'gh auth login' or configure ~/.env for op run" >&2
+  exit 1
+}
+
+echo "[1/4] Fetch GitHub repository inventory -> $REMOTE_JSONL" >&2
+run_gh api --paginate \
+  '/user/repos?affiliation=owner,collaborator,organization_member&visibility=all&per_page=100&sort=full_name' \
+  --jq '.[] | {
+    full_name,
+    owner: .owner.login,
+    private,
+    archived,
+    fork,
+    language,
+    default_branch,
+    updated_at,
+    pushed_at,
+    ssh_url,
+    clone_url
+  }' \
+  > "$REMOTE_JSONL"
+
+echo "[2/4] Scan local Git repositories under $HOME -> $LOCAL_JSON" >&2
+python3 - "$REMOTE_JSONL" "$REMOTE_TSV" "$LOCAL_JSON" "$REPORT_MD" "$TIER_YAML" <<'PY'
+import collections
+import json
+import os
+import re
+import subprocess
+import sys
+from pathlib import Path
+
+remote_jsonl, remote_tsv, local_json, report_md, tier_yaml = map(Path, sys.argv[1:])
+home = Path.home()
+
+remote = []
+for line in remote_jsonl.read_text(errors="replace").splitlines():
+    if line.strip():
+        remote.append(json.loads(line))
+
+with remote_tsv.open("w", encoding="utf-8") as f:
+    f.write("full_name\towner\tprivate\tarchived\tfork\tlanguage\tupdated_at\tpushed_at\tclone_url\n")
+    for r in remote:
+        f.write("\t".join(str(r.get(k) if r.get(k) is not None else "") for k in [
+            "full_name", "owner", "private", "archived", "fork", "language", "updated_at", "pushed_at", "clone_url"
+        ]) + "\n")
+
+exclude_names = {
+    "Library", "Applications", "Movies", "Music", "Pictures", "Public", ".Trash",
+    "node_modules", ".pnpm-store", ".npm", ".cache", "Caches", "dist", "build",
+    ".next", ".nuxt", ".turbo", "target", "venv", ".venv", "__pycache__",
+    ".gradle", ".m2", "Dropbox",
+}
+
+repos = {}
+for dirpath, dirnames, filenames in os.walk(home):
+    p = Path(dirpath)
+    dirnames[:] = [
+        d for d in dirnames
+        if d != ".git" and d not in exclude_names and not d.endswith(".app")
+    ]
+    if (p / ".git").exists():
+        try:
+            top = subprocess.check_output(
+                ["git", "-C", str(p), "rev-parse", "--show-toplevel"],
+                stderr=subprocess.DEVNULL,
+                timeout=3,
+            ).decode().strip()
+        except Exception:
+            top = str(p)
+        repos[top] = True
+        # Normal repos are not descended into. Keep likely nested-repo containers.
+        dirnames[:] = [d for d in dirnames if d in {".claude", ".gitworktrees", "worktrees", "plugins", "vendor_imports"}]
+
+def run(args, timeout=5):
+    try:
+        return subprocess.check_output(args, stderr=subprocess.DEVNULL, timeout=timeout).decode(errors="replace").strip()
+    except Exception:
+        return ""
+
+def github_name(url):
+    if not url:
+        return None
+    m = re.search(r"github\.com[:/]([^/]+)/([^\s]+?)(?:\.git)?$", url.strip())
+    if not m:
+        return None
+    return f"{m.group(1)}/{m.group(2).removesuffix('.git')}"
+
+def area_for(path: Path):
+    s = str(path)
+    if s.startswith(str(home / ".dotfiles")):
+        return "dotfiles"
+    if s.startswith(str(home / "repositories")):
+        return "repositories"
+    if s.startswith(str(home / "Obsidian")):
+        return "Obsidian"
+    if s.startswith(str(home / "projects")):
+        return "projects"
+    if s.startswith(str(home / "workspace")):
+        return "workspace"
+    return "home/other"
+
+local = []
+for top in sorted(repos):
+    p = Path(top)
+    origin = run(["git", "-C", top, "remote", "get-url", "origin"])
+    remotes = run(["git", "-C", top, "remote", "-v"])
+    name = github_name(origin)
+    if not name:
+        for tok in remotes.split():
+            name = github_name(tok)
+            if name:
+                break
+    status = run(["git", "-C", top, "status", "--porcelain"], timeout=5)
+    local.append({
+        "path": top,
+        "area": area_for(p),
+        "origin": origin,
+        "github_full_name": name,
+        "branch": run(["git", "-C", top, "branch", "--show-current"]),
+        "head": run(["git", "-C", top, "rev-parse", "--short", "HEAD"]),
+        "dirty_files": len(status.splitlines()),
+        "has_package_json": (p / "package.json").exists(),
+        "has_pnpm_workspace": (p / "pnpm-workspace.yaml").exists(),
+        "has_turbo": (p / "turbo.json").exists(),
+        "has_nx": (p / "nx.json").exists(),
+        "has_justfile": (p / "justfile").exists() or (p / "Justfile").exists(),
+        "has_mise": (p / ".mise.toml").exists(),
+    })
+
+Path(local_json).write_text(json.dumps(local, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+remote_by_name = {r["full_name"]: r for r in remote}
+local_by_name = collections.defaultdict(list)
+for r in local:
+    if r["github_full_name"]:
+        local_by_name[r["github_full_name"]].append(r)
+
+cloned = set(remote_by_name) & set(local_by_name)
+not_cloned = [r for r in remote if r["full_name"] not in cloned]
+active_not_cloned = [r for r in not_cloned if not r.get("archived")]
+local_not_visible = [r for r in local if r["github_full_name"] and r["github_full_name"] not in remote_by_name]
+no_origin = [r for r in local if not r["origin"]]
+duplicates = {k: v for k, v in local_by_name.items() if len(v) > 1}
+dirty = [r for r in local if r["dirty_files"]]
+
+lines = []
+lines.append("# GitHub/local repository reconciliation")
+lines.append("")
+lines.append(f"Generated: {subprocess.check_output(['date', '+%Y-%m-%d %H:%M:%S %Z']).decode().strip()}")
+lines.append("")
+lines.append("## Summary")
+lines.append("")
+lines.append(f"- Remote visible repos: {len(remote)}")
+lines.append(f"- Local Git repos under $HOME: {len(local)}")
+lines.append(f"- Unique visible GitHub repos cloned locally: {len(cloned)}")
+lines.append(f"- Remote repos not cloned locally: {len(not_cloned)}")
+lines.append(f"- Active non-archived remote repos not cloned locally: {len(active_not_cloned)}")
+lines.append(f"- Local repos without origin: {len(no_origin)}")
+lines.append(f"- Dirty local repos/worktrees: {len(dirty)}")
+lines.append("")
+lines.append("## Remote repos by owner")
+lines.append("")
+for owner, count in collections.Counter(r["owner"] for r in remote).most_common():
+    lines.append(f"- {owner}: {count}")
+lines.append("")
+lines.append("## Local repos by area")
+lines.append("")
+for area, count in collections.Counter(r["area"] for r in local).most_common():
+    lines.append(f"- {area}: {count}")
+lines.append("")
+lines.append("## Duplicate local checkouts/worktrees")
+lines.append("")
+if duplicates:
+    for name, entries in sorted(duplicates.items()):
+        lines.append(f"- {name}")
+        for e in entries:
+            lines.append(f"  - {e['path']} ({e['branch'] or 'detached'}, dirty={e['dirty_files']})")
+else:
+    lines.append("- None")
+lines.append("")
+lines.append("## Local repos without origin")
+lines.append("")
+if no_origin:
+    for r in no_origin:
+        lines.append(f"- {r['path']} ({r['area']}, branch={r['branch'] or 'detached'}, dirty={r['dirty_files']})")
+else:
+    lines.append("- None")
+lines.append("")
+lines.append("## Local GitHub repos not in visible GitHub inventory")
+lines.append("")
+if local_not_visible:
+    for r in local_not_visible:
+        lines.append(f"- {r['github_full_name']} → {r['path']}")
+else:
+    lines.append("- None")
+lines.append("")
+lines.append("## Dirty local repos/worktrees")
+lines.append("")
+if dirty:
+    for r in dirty:
+        lines.append(f"- {r['github_full_name'] or '(no GitHub origin)'} → {r['path']} ({r['branch'] or 'detached'}, dirty={r['dirty_files']})")
+else:
+    lines.append("- None")
+lines.append("")
+lines.append("## Recent active remote repos not cloned locally")
+lines.append("")
+for r in sorted(active_not_cloned, key=lambda x: x.get("updated_at") or "", reverse=True)[:50]:
+    lines.append(f"- {r['full_name']} ({'private' if r.get('private') else 'public'}, {r.get('language') or 'none'}, updated={r.get('updated_at')})")
+lines.append("")
+Path(report_md).write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+def group_for(repo):
+    path = repo["path"]
+    name = repo.get("github_full_name") or ""
+    if path in {str(home / ".dotfiles"), str(home / ".claude"), str(home / ".hermes"), str(home / ".openclaw"), str(home / ".skills")}:
+        return "core"
+    if path.startswith(str(home / "Obsidian")):
+        return "local-only" if not repo.get("github_full_name") else "vault"
+    if name == "pi-cop-dev/service" or "/pi-cop-dev/" in path:
+        return "work"
+    if not repo.get("github_full_name"):
+        return "local-only"
+    if path.startswith(str(home / ".nvm")) or path.startswith(str(home / ".oh-my-zsh")) or "/.codex/" in path or "/plugins/marketplaces/" in path or "/vendor_imports/" in path or "/plugins/cache/" in path:
+        return "vendor"
+    if name.startswith("younho9/") or path.startswith(str(home / "projects")) or path.startswith(str(home / "workspace")):
+        return "personal-active"
+    return "vendor"
+
+by_group = collections.defaultdict(list)
+for repo in local:
+    by_group[group_for(repo)].append(repo)
+
+def yq(value):
+    return json.dumps(value, ensure_ascii=False)
+
+yaml_lines = [
+    "# Suggested gita groups generated from GitHub/local inventory.",
+    f"generated: {yq(subprocess.check_output(['date', '+%Y-%m-%d %H:%M:%S %Z']).decode().strip())}",
+    "groups:",
+]
+for group in ["core", "vault", "work", "personal-active", "local-only", "vendor"]:
+    yaml_lines.append(f"  {group}:")
+    for repo in sorted(by_group.get(group, []), key=lambda x: x["path"]):
+        yaml_lines.append(f"    - path: {yq(repo['path'])}")
+        yaml_lines.append(f"      name: {yq(repo.get('github_full_name') or '')}")
+        yaml_lines.append(f"      branch: {yq(repo.get('branch') or 'detached')}")
+        yaml_lines.append(f"      dirty_files: {repo.get('dirty_files', 0)}")
+Path(tier_yaml).write_text("\n".join(yaml_lines) + "\n", encoding="utf-8")
+
+print(f"[3/4] Wrote {remote_tsv}")
+print(f"[4/4] Wrote {local_json}, {report_md}, and {tier_yaml}")
+PY
+
+echo "done: $OUT_DIR" >&2

@@ -17,6 +17,14 @@ ln -sf "$HOME/.dotfiles/.config/lazygit/config.yml" "$HOME/Library/Application S
 ln -sf "$HOME/.dotfiles/.aws" "$HOME/.aws"
 mkdir -p "$HOME/.agent-browser"
 ln -sf "$HOME/.dotfiles/.agent-browser/config.json" "$HOME/.agent-browser/config.json"
+mkdir -p "$HOME/.local/bin"
+if [[ -d "$HOME/.dotfiles/bin" ]]; then
+	for script in "$HOME/.dotfiles/bin/"*; do
+		[[ -f "$script" ]] || continue
+		chmod +x "$script"
+		ln -sf "$script" "$HOME/.local/bin/${script:t}"
+	done
+fi
 
 # Install oh-my-zsh https://ohmyz.sh/#install
 sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
@@ -51,19 +59,23 @@ brew install --cask font-meslo-lg-nerd-font
 brew install --cask font-d2coding
 
 # Install tools.
-brew install mr
 brew install bat
 brew install argocd
 brew install go
 brew install fzf
 brew install gh
+brew install ghq
 brew install glab
 brew install git
 brew install jq
+brew install just
+brew install mise
+brew install multi-gitter
 brew install nvm
 brew install tree
 brew install neofetch
 brew install pyenv
+brew install uv
 brew install mas
 brew install 1password-cli
 brew install deno
@@ -75,6 +87,9 @@ brew install helix
 brew install yazi
 brew install lazygit
 brew install cmux
+
+# Install Python CLI tools.
+uv tool install gita || uv tool upgrade gita
 
 # Install apps.
 brew install --cask figma
@@ -101,13 +116,33 @@ brew install --cask 1password
 # Remove outdated versions from the cellar.
 brew cleanup
 
-# Checkout all repos (dotfiles already exists, mr skips it)
-envsubst < "$HOME/.dotfiles/.mrconfig.tmpl" > "$HOME/.dotfiles/.mrconfig"
-ln -sf "$HOME/.dotfiles/.mrconfig" "$HOME/.mrconfig"
-mr checkout
+# Bootstrap core repositories and project-management tools.
+git config --global ghq.root "$HOME/repositories"
 
-# Install LaunchAgents
-bash "$HOME/.dotfiles/launchd/install.sh"
+ensure_repo() {
+	local repo_url="$1"
+	local target_dir="$2"
+
+	if [[ -d "$target_dir/.git" ]]; then
+		git -C "$target_dir" pull --ff-only --quiet || true
+	else
+		mkdir -p "${target_dir:h}"
+		git clone "$repo_url" "$target_dir"
+	fi
+}
+
+ensure_repo "https://github.com/younho9/skills.git" "$HOME/.skills"
+ensure_repo "https://github.com/younho9/.claude.git" "$HOME/.claude"
+mkdir -p "$HOME/.agents"
+ln -sf "$HOME/.skills/skills" "$HOME/.agents/skills"
+
+if command -v gita >/dev/null 2>&1; then
+	gita add -a "$HOME/.dotfiles" "$HOME/.skills" "$HOME/.claude" "$HOME/Obsidian" "$HOME/repositories" || true
+fi
+
+if command -v github-projects-inventory >/dev/null 2>&1; then
+	github-projects-inventory "$HOME/repositories/_inventory" || true
+fi
 
 # Install node
 echo "installing node (via nvm)"
