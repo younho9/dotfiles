@@ -1,0 +1,146 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+OUT_DIR="${1:-$HOME/repositories/_inventory}"
+LOCAL_JSON="$OUT_DIR/local-repos.json"
+REFRESH="${GITA_REGISTER_REFRESH:-0}"
+
+if ! command -v gita >/dev/null 2>&1; then
+  echo "error: gita is not installed or not on PATH" >&2
+  exit 1
+fi
+
+if [[ "$REFRESH" == "1" || ! -f "$LOCAL_JSON" ]]; then
+  if ! command -v github-projects-inventory >/dev/null 2>&1; then
+    echo "error: $LOCAL_JSON missing and github-projects-inventory is not on PATH" >&2
+    exit 1
+  fi
+  github-projects-inventory "$OUT_DIR"
+fi
+
+python3 - "$LOCAL_JSON" <<'PY'
+import csv
+import json
+import subprocess
+import sys
+from pathlib import Path
+
+local_json = Path(sys.argv[1])
+home = Path.home()
+gita_dir = home / ".config" / "gita"
+repos_csv = gita_dir / "repos.csv"
+groups_csv = gita_dir / "groups.csv"
+
+repos = json.loads(local_json.read_text(encoding="utf-8"))
+
+GROUP_ORDER = ["core", "vault", "work", "personal-active", "local-only", "vendor"]
+
+EXPLICIT_NAMES = {
+    str(home / ".openclaw.bak.20260212" / "workspace"): "openclaw-bak-workspace",
+    str(home / ".claude.backup.20260210_225332" / "plugins" / "marketplaces" / "claude-plugins-official"): "claude-backup-plugins-official",
+    str(home / ".codex" / ".tmp" / "marketplaces" / "claude-plugins-official"): "codex-tmp-claude-plugins-official",
+    str(home / ".codex" / ".tmp" / "plugins"): "codex-tmp-plugins",
+    str(home / ".codex" / "plugins" / "cache" / "claude-plugins-official" / "superpowers" / "5.1.0"): "codex-cache-superpowers",
+    str(home / ".codex" / "vendor_imports" / "skills"): "codex-vendor-skills",
+}
+
+CORE_PATHS = {str(home / p) for p in [".dotfiles", ".claude", ".hermes", ".openclaw", ".skills"]}
+
+
+def group_for(repo):
+    path = repo["path"]
+    name = repo.get("github_full_name") or ""
+    if path in CORE_PATHS:
+        return "core"
+    if path.startswith(str(home / "Obsidian")):
+        return "local-only" if not repo.get("github_full_name") else "vault"
+    if name == "pi-cop-dev/service" or "/pi-cop-dev/" in path:
+        return "work"
+    if not repo.get("github_full_name"):
+        return "local-only"
+    if (
+        path.startswith(str(home / ".nvm"))
+        or path.startswith(str(home / ".oh-my-zsh"))
+        or "/.codex/" in path
+        or "/plugins/marketplaces/" in path
+        or "/vendor_imports/" in path
+        or "/plugins/cache/" in path
+    ):
+        return "vendor"
+    if name.startswith("younho9/") or path.startswith(str(home / "projects")) or path.startswith(str(home / "workspace")):
+        return "personal-active"
+    return "vendor"
+
+
+def desired_name(repo):
+    path = repo["path"]
+    if path in EXPLICIT_NAMES:
+        return EXPLICIT_NAMES[path]
+    return Path(path).name
+
+
+def run(args, check=False):
+    proc = subprocess.run(args, text=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    if check and proc.returncode:
+        print(proc.stdout, end="", file=sys.stderr)
+        raise SystemExit(proc.returncode)
+    return proc
+
+
+def read_repo_map():
+    mapping = {}
+    if not repos_csv.exists():
+        return mapping
+    with repos_csv.open(newline="", encoding="utf-8") as f:
+        for row in csv.reader(f):
+            if len(row) >= 2:
+                mapping[row[0]] = row[1]
+    return mapping
+
+# Add every discovered repo. Existing repos are harmless: gita prints "No new repos found!".
+for repo in repos:
+    path = repo["path"]
+    group = group_for(repo)
+    if Path(path).exists():
+        run(["gita", "add", "-g", group, path])
+
+# Rename ambiguous auto-generated names into stable names.
+path_to_name = read_repo_map()
+name_to_path = {name: path for path, name in path_to_name.items()}
+for repo in repos:
+    path = repo["path"]
+    want = desired_name(repo)
+    have = path_to_name.get(path)
+    if not have or have == want:
+        continue
+    if want in name_to_path and name_to_path[want] != path:
+        print(f"warning: cannot rename {have!r} to {want!r}; name already used by {name_to_path[want]}", file=sys.stderr)
+        continue
+    proc = run(["gita", "rename", have, want])
+    if proc.returncode:
+        print(proc.stdout, end="", file=sys.stderr)
+    else:
+        path_to_name[path] = want
+        name_to_path.pop(have, None)
+        name_to_path[want] = path
+
+# Rewrite curated group membership deterministically using gita's simple groups.csv format.
+path_to_name = read_repo_map()
+by_group = {g: [] for g in GROUP_ORDER}
+for repo in repos:
+    name = path_to_name.get(repo["path"])
+    if name:
+        by_group[group_for(repo)].append(name)
+
+gita_dir.mkdir(parents=True, exist_ok=True)
+lines = []
+for group in GROUP_ORDER:
+    names = sorted(set(by_group[group]))
+    if names:
+        lines.append(f"{group}:{' '.join(names)}:\n")
+groups_csv.write_text("".join(lines), encoding="utf-8")
+
+print(f"registered_repos={len(path_to_name)}")
+for group in GROUP_ORDER:
+    print(f"{group}={len(set(by_group[group]))}")
+PY

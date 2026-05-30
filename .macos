@@ -136,12 +136,14 @@ ensure_repo "https://github.com/younho9/.claude.git" "$HOME/.claude"
 mkdir -p "$HOME/.agents"
 ln -sf "$HOME/.skills/skills" "$HOME/.agents/skills"
 
-if command -v gita >/dev/null 2>&1; then
-	gita add -a "$HOME/.dotfiles" "$HOME/.skills" "$HOME/.claude" "$HOME/Obsidian" "$HOME/repositories" || true
-fi
-
 if command -v github-projects-inventory >/dev/null 2>&1; then
 	github-projects-inventory "$HOME/repositories/_inventory" || true
+fi
+
+if command -v gita-register-projects >/dev/null 2>&1; then
+	gita-register-projects "$HOME/repositories/_inventory" || true
+elif command -v gita >/dev/null 2>&1; then
+	gita add -a "$HOME/.dotfiles" "$HOME/.skills" "$HOME/.claude" "$HOME/Obsidian" "$HOME/repositories" || true
 fi
 
 # Install node
