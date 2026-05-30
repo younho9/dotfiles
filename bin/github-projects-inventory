@@ -81,14 +81,41 @@ exclude_names = {
     ".gradle", ".m2", "Dropbox",
 }
 
+def is_git_worktree(path: Path) -> bool:
+    """Return True for linked Git worktrees, but not for normal repos.
+
+    A linked worktree has a .git *file* pointing at the main repo's
+    .git/worktrees/<name>. We keep the main checkout in inventory/gita and
+    skip these branch-specific worktrees so they don't appear as duplicate
+    projects.
+    """
+    git_file = path / ".git"
+    if not git_file.is_file():
+        return False
+    try:
+        content = git_file.read_text(errors="replace")
+    except Exception:
+        return False
+    return "/.git/worktrees/" in content or "\\.git\\worktrees\\" in content
+
 repos = {}
 for dirpath, dirnames, filenames in os.walk(home):
     p = Path(dirpath)
+
+    # Claude-created worktrees are branch checkouts of an already-registered
+    # project, not top-level projects for gita operations.
+    if "/.claude/worktrees/" in str(p):
+        dirnames[:] = []
+        continue
+
     dirnames[:] = [
         d for d in dirnames
         if d != ".git" and d not in exclude_names and not d.endswith(".app")
     ]
     if (p / ".git").exists():
+        if is_git_worktree(p):
+            dirnames[:] = []
+            continue
         try:
             top = subprocess.check_output(
                 ["git", "-C", str(p), "rev-parse", "--show-toplevel"],
@@ -99,7 +126,7 @@ for dirpath, dirnames, filenames in os.walk(home):
             top = str(p)
         repos[top] = True
         # Normal repos are not descended into. Keep likely nested-repo containers.
-        dirnames[:] = [d for d in dirnames if d in {".claude", ".gitworktrees", "worktrees", "plugins", "vendor_imports"}]
+        dirnames[:] = [d for d in dirnames if d in {".claude", "plugins", "vendor_imports"}]
 
 def run(args, timeout=5):
     try:
