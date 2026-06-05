@@ -14,3 +14,6 @@ alias difit-branch='difit . $(git merge-base HEAD $(git symbolic-ref refs/remote
 
 # git-spice
 alias gs='git-spice'
+
+# claude - 전역 스킬/설정 제외하고 프로젝트 설정만 로드 (격리된 config dir 사용)
+alias claude-clean='CLAUDE_CONFIG_DIR=~/.claude-clean claude'
