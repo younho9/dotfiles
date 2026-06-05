@@ -46,6 +46,18 @@ sync_workspace() {
     return
   fi
 
+  # cwd 가 linked worktree 루트이면 main worktree 경로로 교체
+  # (git repo 의 하위 디렉토리인 경우는 제외)
+  local worktrees main_wt
+  worktrees="$(git -C "$cwd" worktree list --porcelain 2>/dev/null | awk '/^worktree /{print $2}')"
+  if echo "$worktrees" | grep -qxF "$cwd"; then
+    main_wt="$(echo "$worktrees" | head -1)"
+    if [[ -n "$main_wt" && "$main_wt" != "$cwd" ]]; then
+      log "worktree: $cwd -> $main_wt"
+      cwd="$main_wt"
+    fi
+  fi
+
   local folder="${cwd##*/}"
 
   if try_raise_window "$folder"; then
