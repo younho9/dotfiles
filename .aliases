@@ -8,12 +8,5 @@ alias dl='cd ~/Downloads'
 alias dt='cd ~/Desktop'
 alias '$'=''
 
-# difit - local diff review
-alias difit='npx difit@3.1.7 --include-untracked --mode split'
-alias difit-branch='difit . $(git merge-base HEAD $(git symbolic-ref refs/remotes/origin/HEAD --short))'
-
-# git-spice
-alias gs='git-spice'
-
 # claude - 전역 스킬/설정 제외하고 프로젝트 설정만 로드 (격리된 config dir 사용)
 alias claude-clean='CLAUDE_CONFIG_DIR=~/.claude-clean claude'
