@@ -64,8 +64,6 @@ yarn-error.log
 .prompts/
 opencode.jsonc
 .omc/
-.agents/
 .codex/
-AGENTS.md
 
 .devflow/
