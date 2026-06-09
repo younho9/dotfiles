@@ -23,7 +23,9 @@ load-nvmrc() {
     elif [ "$nvmrc_node_version" != "$node_version" ]; then
       nvm use
     fi
-  elif [ "$node_version" != "$(nvm version default)" ]; then
+  elif [ -n "$(PWD=$OLDPWD nvm_find_nvmrc)" ] && [ "$node_version" != "$(nvm version default)" ]; then
+    # 공식 가드: 직전 디렉터리($OLDPWD)에 .nvmrc 가 있었을 때만 revert.
+    # 이 가드가 없으면 .nvmrc 없는 새 쉘마다 무거운 `nvm use default` 가 돌아 startup 이 느려진다.
     echo "Reverting to nvm default version"
     nvm use default
   fi
