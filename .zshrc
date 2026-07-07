@@ -26,6 +26,7 @@ source ~/.zsh/go.zsh                                         # Go
 source ~/.zsh/vite-plus.zsh                                  # Vite+
 source ~/.zsh/maestro.zsh                                    # Maestro
 source ~/.zsh/qmd.zsh                                        # qmd
+source ~/.zsh/direnv.zsh                                     # direnv
 
 # bun completions
 [ -s "~/.bun/_bun" ] && source "~/.bun/_bun"
