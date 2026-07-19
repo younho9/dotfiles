@@ -12,6 +12,7 @@ source ~/.exports                                           # Public exports (PA
 source ~/.zsh/op-sync.zsh                                    # 1Password file sync (auto)
 [[ -f ~/.dotfiles/.config/op/${HOST}.env ]] && ln -sf "$HOME/.dotfiles/.config/op/${HOST}.env" ~/.env  # Symlink for `op run`
 [[ -f ~/.env ]] && { set -a; source ~/.env; set +a; }       # Machine env + op:// references (exported)
+source ~/.zsh/openclaw-identity.zsh                          # Bot git identity (opt-in: OPENCLAW_BOT_IDENTITY=1)
 
 # 2. Oh My Zsh and theme
 source ~/.zsh/oh-my-zsh.zsh                                  # Oh My Zsh plugins and theme
